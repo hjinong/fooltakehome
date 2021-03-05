@@ -31,7 +31,10 @@ class Wpstuff{
          'with_front' => false, // Don't display the category base before "/tickers/"
          'hierarchical' => true // This will allow URL's like "/tickers/boston/cambridge/"
        ),
-       'capabilities'=>array('manage_terms'=>'edit_posts')
+       'capabilities'=>array('manage_terms'=>'edit_posts',
+        'edit_terms'=> 'edit_posts',
+        'delete_terms'=> 'edit_posts',
+        'assign_terms' => 'edit_posts')
      ));
    }
    
@@ -43,6 +46,16 @@ class Wpstuff{
                 return plugin_path. 'templates/template-article.php';
            }
        }
+       else if ( $post->post_type == 'recommendation' ) {
+            if ( file_exists( plugin_path. 'templates/template-recommendation.php' ) ) {
+             return plugin_path. 'templates/template-recommendation.php';
+        }
+        }
+        if ( $post->post_type == 'company' ) {
+            if ( file_exists( plugin_path. 'templates/template-company.php' ) ) {
+                return plugin_path. 'templates/template-company.php';
+            }
+        }
 
        return $single;
 
