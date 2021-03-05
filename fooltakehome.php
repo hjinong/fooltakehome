@@ -9,6 +9,11 @@
  require_once('autoload.php');
 
  define('plugin_path',plugin_dir_path(__FILE__));
+ //ticker api endpoint quote example: https://financialmodelingprep.com/api/v3/quote/AAPL?apikey=demo
+ //ticker api endpoint profile example: https://financialmodelingprep.com/api/v3/profile/AAPL?apikey=demo
+ define('endpoint_quote','https://financialmodelingprep.com/api/v3/quote/');
+ define('endpoint_profile','https://financialmodelingprep.com/api/v3/profile/');
+ define('endpoint_apikey','a8bffaf7671b3fbd13cb9ad83909bf4d ');
 
  class fooltakehome{
     public $songList;

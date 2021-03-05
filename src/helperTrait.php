@@ -19,5 +19,11 @@ trait helperTrait{
         curl_close($ch);  
         return $output;       
     }  
+    function getProfile($ticker){
+        return $this->curl(endpoint_profile.$ticker.'?apikey='.endpoint_apikey);
+    }
+    function getQuote($ticker){
+        return $this->curl(endpoint_quote.$ticker.'?apikey='.endpoint_apikey);
+    }
 }
 ?>
