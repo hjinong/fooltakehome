@@ -10,24 +10,28 @@ if(sizeof($terms)){
     $Company=new \fooltakehome\Company();
     $profileFromAPI=$Company->getProfile($ticker);
     $profileArr=json_decode($profileFromAPI,true);
-    $fields=array('Company Logo'=>'image',
-        'Company Name'=>'companyName',
-        'Exchange'=>'exchange',
-        'Description'=>'description',
-        'Industry'=>'industry',
-        'Sector'=>'sector',
-        'CEO'=>'ceo',
-        'Website URL'=>'website');
-    foreach($fields as $k=>$v){
-        if($v=='image'){
-            $text='<img alt="'.$profileArr[0]['companyName'].' logo" src="'.$profileArr[0][$v].'" />';
-        }else if($v=='website'){
-            $text='<a href="'.$profileArr[0][$v].' target="_blank" rel="noopener">'.$profileArr[0][$v].'</a>';
+    if(is_array($profileArr)&&sizeof($profileArr)){
+        $fields=array('Company Logo'=>'image',
+            'Company Name'=>'companyName',
+            'Exchange'=>'exchange',
+            'Description'=>'description',
+            'Industry'=>'industry',
+            'Sector'=>'sector',
+            'CEO'=>'ceo',
+            'Website URL'=>'website');
+        foreach($fields as $k=>$v){
+            if($v=='image'){
+                $text='<img alt="'.$profileArr[0]['companyName'].' logo" src="'.$profileArr[0][$v].'" />';
+            }else if($v=='website'){
+                $text='<a href="'.$profileArr[0][$v].'" target="_blank" rel="noopener">'.$profileArr[0][$v].'</a>';
+            }
+            else{
+                $text=$profileArr[0][$v];
+            }
+            echo "<li><label>$k: </label>$text</li>";
         }
-        else{
-            $text=$profileArr[0][$v];
-        }
-        echo "<li><label>$k: </label>$text</li>";
+    }else{
+        echo '<li>Error retrieving data</li>';
     }
 }
 else{
