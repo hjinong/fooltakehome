@@ -28,10 +28,11 @@
         wp_enqueue_script(
             'fooltakehome-main-js', 
             plugins_url( 'js/main.js',  __FILE__  ), 
-            array(), 
-            time(), 
-            true 
-        );          
+        );    
+        wp_enqueue_style(
+            'fooltakehome-main-css', // Handle.
+            plugins_url( 'css/style.css',  __FILE__ ),
+        );       
         if(is_admin()){
             wp_enqueue_script(
                 'fooltakehome-admin-js', 

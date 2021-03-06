@@ -3,8 +3,10 @@ namespace fooltakehome;
 
 class Company{
     use \fooltakehome\helperTrait;
-    public function getTickerInfo($ticker){
-        var_dump($this->getProfile($ticker));
-        var_dump($this->getQuote($ticker));
+    function getProfile($ticker){
+        return $this->curl(endpoint_profile.$ticker.'?apikey='.endpoint_apikey);
+    }
+    function getQuote($ticker){
+        return $this->curl(endpoint_quote.$ticker.'?apikey='.endpoint_apikey);
     }
 }

@@ -1,0 +1,15 @@
+body.recommendation-template-default.single-recommendation div#primary main#main {
+    display: flex;
+  }
+  body.recommendation-template-default.single-recommendation div#primary main#main article {
+    width: 66%;
+  }
+  body.recommendation-template-default.single-recommendation div#primary main#main ul.callouts {
+    width: 33%;
+    border: 1px solid #cecece;
+  }
+  @media (max-width: 800px) {
+    body.recommendation-template-default.single-recommendation div#primary main#main {
+      flex-direction: column;
+    }
+  }
