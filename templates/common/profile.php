@@ -1,12 +1,19 @@
 
 <ul class="callouts profile">
 <?php
-//get ticker
-$terms=get_the_terms($post->ID,'ticker');
-
-if(sizeof($terms)){
-    //post gets associated with just one ticker
-    $ticker=$terms[0]->name;
+if(isset($ticker)&&!empty($ticker)){ //coming from the company page (template-company.php)
+    $terms=array();
+}else{
+    //get ticker
+    $terms=get_the_terms($post->ID,'ticker');
+    if($terms&&sizeof($terms)){
+        //post gets associated with just one ticker
+        $ticker=$terms[0]->name;
+    }else{
+        $ticker='';
+    }    
+}
+if(isset($ticker)&&!empty($ticker)){
     $Company=new \fooltakehome\Company();
     $profileFromAPI=$Company->getProfile($ticker);
     $profileArr=json_decode($profileFromAPI,true);
@@ -20,15 +27,13 @@ if(sizeof($terms)){
             'CEO'=>'ceo',
             'Website URL'=>'website');
         foreach($fields as $k=>$v){
-            if($v=='image'){
-                $text='<img alt="'.$profileArr[0]['companyName'].' logo" src="'.$profileArr[0][$v].'" />';
-            }else if($v=='website'){
-                $text='<a href="'.$profileArr[0][$v].'" target="_blank" rel="noopener">'.$profileArr[0][$v].'</a>';
+            if(isset($includeArr)&&sizeof($includeArr)){
+                if(in_array($k,$includeArr)){
+                    outputProfileLi($k,$v,$profileArr);
+                }
+            }else{
+                outputProfileLi($k,$v,$profileArr);
             }
-            else{
-                $text=$profileArr[0][$v];
-            }
-            echo "<li><label>$k: </label>$text</li>";
         }
     }else{
         echo '<li>Error retrieving data</li>';
@@ -36,8 +41,22 @@ if(sizeof($terms)){
 }
 else{
 ?>
-    <li>No ticker associated with this recommendation</li>
+    <li>No ticker</li>
 <?php
 }
+$beta=$profileArr[0]['beta'];
 ?>
 </ul>
+<?php
+function outputProfileLi($k,$v,$profileArr){
+    if($v=='image'){
+        $text='<img alt="'.$profileArr[0]['companyName'].' logo" src="'.$profileArr[0][$v].'" />';
+    }else if($v=='website'){
+        $text='<a href="'.$profileArr[0][$v].'" target="_blank" rel="noopener">'.$profileArr[0][$v].'</a>';
+    }
+    else{
+        $text=$profileArr[0][$v];
+    }
+    echo "<li><label>$k: </label>$text</li>";    
+}
+?>
