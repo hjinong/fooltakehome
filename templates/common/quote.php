@@ -55,6 +55,7 @@ function outputQuoteLi($k,$v,$quoteArr,$beta=''){
     }else if($v=='Beta'){
         $text=$beta; //coming over from profile.php run prior to this.  TODO: undo this hard dependency
     }else if($v=='lastDiv'){
+        if(!isset($quoteArr[0][$v])||empty($quoteArr[0][$v]))
         $text='N/A'; //couldn't find any stock that included this info via either profile or quote
     }
     else{
